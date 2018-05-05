@@ -12,7 +12,7 @@ import java.util.List;
  * @description
  */
 
-@WebService
+//@WebService
 public interface IRemoteService {
     public String showRemoteMessage(@WebParam(name="arg0") String message);
 

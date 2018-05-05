@@ -13,7 +13,7 @@ import java.util.List;
  * @description
  */
 
-@WebService(endpointInterface="org.ppp.service.IRemoteService")
+//@WebService(endpointInterface="org.ppp.service.IRemoteService")
 public class RemoteServiceImpl implements IRemoteService {
 
     @Override

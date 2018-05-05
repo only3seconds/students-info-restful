@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://cxf.apache.org/jaxrs
+       http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <!-- 使用注解式注入 -->
+    <context:annotation-config />
+    <!-- 自动扫描 -->
+    <context:component-scan base-package="org.ppp" />
+    <bean id="rs" class="org.ppp.service.impl.RESTSampleSource"></bean>
+
+    <jaxrs:server address="/" id="RESTWebService">
+        <jaxrs:serviceBeans>
+            <ref bean="rs"/>    <!--如果还有其它的服务，继续在这里引用-->
+        </jaxrs:serviceBeans>
+
+        <jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+            <bean class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
+        </jaxrs:providers>
+    </jaxrs:server>
+</beans>
