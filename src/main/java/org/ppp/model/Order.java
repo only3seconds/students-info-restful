@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 
 public class Order implements Serializable {
+
+
     private String OrderNo;
     private String itemCode;
     private String itemName;
