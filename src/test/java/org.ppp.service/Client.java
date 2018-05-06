@@ -13,7 +13,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @description
  */
 
-
 public class Client {
     @Autowired
     private RESTSample rESTSample;

@@ -1,6 +1,6 @@
 package org.ppp.service.impl;
 
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSON;
 import org.ppp.model.User;
 import org.ppp.service.RESTSample;
 
@@ -77,11 +77,10 @@ public class RESTSampleSource implements RESTSample {
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public String getMessage(@PathParam("id") int id) {
-        JSONObject jsonObject=new JSONObject();
         User user = new User();
         user.setId(id);
         user.setName("JojO");
-        return  jsonObject.fromObject(user).toString();
+        return JSON.toJSONString(user);
     }
 
     @POST
