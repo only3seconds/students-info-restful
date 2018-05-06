@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * @author thinking_fioa
+ * @author ppp
  * @createTime 2018/5/5
  * @description
  */
