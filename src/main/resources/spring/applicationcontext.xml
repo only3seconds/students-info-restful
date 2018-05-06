@@ -13,8 +13,6 @@
     http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
 
-    <!-- " -->
-
     <import resource="spring-cxf-restful.xml"/>
     <!-- 使用注解式注入 -->
     <context:annotation-config />
@@ -30,4 +28,47 @@
         <constructor-arg type="java.lang.String" value="http://localhost:8080/students-info-restful/cxf/" />
         <constructor-arg type="java.lang.Class" value="org.ppp.service.RESTSample" />
     </bean>
+
+    <!-- for properties -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="fileEncoding" value="utf-8" />
+        <property name="locations">
+            <list>
+                <value>classpath*:students-info-restful.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- for database -->
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">
+        <property name="driverClass" value="${students.info.db.driverClass}" />
+        <property name="jdbcUrl" value="${students.info.db.url}" />
+        <property name="user" value="${students.info.db.user}" />
+        <property name="password" value="${students.info.db.password}" />
+        <property name="initialPoolSize" value="3" />
+        <property name="minPoolSize" value="2" />
+        <property name="maxPoolSize" value="10" />
+        <property name="maxIdleTime" value="60" />
+        <property name="acquireRetryDelay" value="1000" />
+        <property name="acquireRetryAttempts" value="10" />
+        <property name="preferredTestQuery" value="SELECT 1" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath:mybatis-mapper/*.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="org.ppp.dao" />
+    </bean>
+
+    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+        <!--<property name="dataSource" ref="dataSource" />-->
+    <!--</bean>-->
+
+    <!--<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>-->
+
 </beans>

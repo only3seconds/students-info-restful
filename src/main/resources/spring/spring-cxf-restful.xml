@@ -16,6 +16,7 @@
     <context:component-scan base-package="org.ppp" />
     <bean id="rs" class="org.ppp.service.impl.RESTSampleSource"></bean>
 
+
     <jaxrs:server address="/" id="RESTWebService">
         <jaxrs:serviceBeans>
             <ref bean="rs"/>    <!--如果还有其它的服务，继续在这里引用-->
@@ -26,4 +27,17 @@
             <bean class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
         </jaxrs:providers>
     </jaxrs:server>
+
+    <bean id="student" class="org.ppp.service.impl.StudentServiceImpl"></bean>
+    <jaxrs:server address="/" id="StudentService">
+        <jaxrs:serviceBeans>
+            <ref bean="stduent"/>
+        </jaxrs:serviceBeans>
+
+        <jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+            <bean class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
+        </jaxrs:providers>
+    </jaxrs:server>
+
 </beans>

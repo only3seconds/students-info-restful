@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ppp.dao.StudentDao">
+    <resultMap id="Student" type="org.ppp.model.Student">
+        <result column="id" property="id" />
+        <result column="student_num" property="studentId" />
+        <result column="student_name" property="studentName" />
+        <result column="gender" property="gender" />
+        <result column="age" property="age" />
+        <result column="address" property="address" />
+        <result column="major" property="major" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        t.id,
+        t.student_num,
+        t.student_name,
+        t.gender,
+        t.age,
+        t.address,
+        t.major,
+        t.deleted
+    </sql>
+    
+    <select id="findByStudentNum" parameterType="java.lang.String" resultMap="Student">
+        SELECT <include refid="Base_Column_List" />
+        FROM STUDENT AS t
+        WHERE t.student_num = #{studentNum}
+    </select>
+</mapper>
