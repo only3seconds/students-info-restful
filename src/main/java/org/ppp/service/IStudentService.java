@@ -13,9 +13,9 @@ public interface IStudentService {
      * @return
      */
     @GET
-    @Path(value = "/findStuByNum/{studentNum}")
+    @Path(value = "/findStuByNum/")
     @Produces(MediaType.APPLICATION_JSON)
-    public String findByStudentNum(@PathParam("studentNum") String  studentNum);
+    public String findByStudentNum(@FormParam("studentNum") String  studentNum);
 
     /**
      * 增加一个学生信息
@@ -31,9 +31,9 @@ public interface IStudentService {
      * @param studentNum 学生学号
      */
     @GET
-    @Path("/deleteStu/{studentNum}")
+    @Path("/deleteStu/")
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteStu(@PathParam("studentNum") String studentNum);
+    public String deleteStu(@FormParam("studentNum") String studentNum);
 
 }
 

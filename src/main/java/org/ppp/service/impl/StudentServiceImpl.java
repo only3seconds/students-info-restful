@@ -24,10 +24,10 @@ public class StudentServiceImpl implements IStudentService {
     private StudentDao studentDao;
 
     @GET
-    @Path(value = "/findStuByNum/{studentNum}")
+    @Path(value = "/findStuByNum/")
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public String findByStudentNum(@PathParam("studentNum") String  studentNum) {
+    public String findByStudentNum(@FormParam("studentNum") String  studentNum) {
         JSONObject returnObject = new JSONObject();
         Student student = studentDao.findByStudentNum(studentNum);
         returnObject.put("data", JSON.toJSONString(student));
@@ -47,10 +47,10 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @GET
-    @Path("/deleteStu/{studentNum}")
+    @Path("/deleteStu/")
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public String deleteStu(@PathParam("studentNum") String studentNum) {
+    public String deleteStu(@FormParam("studentNum") String studentNum) {
         JSONObject returnObject = new JSONObject();
         try {
             studentDao.deleteStu(studentNum);

@@ -31,7 +31,7 @@
     </select>
 
     <insert id="addStu" parameterType="org.ppp.model.Student" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO STUDENT ('student_num', 'student_name', 'gender', 'age', 'address', 'major', 'deleted')
+        INSERT INTO STUDENT (`student_num`, `student_name`, `gender`, `age`, `address`, `major`, `deleted`)
         VALUES (#{studentNum}, #{studentName}, #{gender}, #{age}, #{address}, #{major}, #{deleted});
     </insert>
     
