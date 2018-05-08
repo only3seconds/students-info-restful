@@ -48,7 +48,7 @@ public class StudentServiceImpl implements IStudentService {
 
     @GET
     @Path("/deleteStu/{studentNum}")
-    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     @Override
     public String deleteStu(@PathParam("studentNum") String studentNum) {
         JSONObject returnObject = new JSONObject();
@@ -56,7 +56,9 @@ public class StudentServiceImpl implements IStudentService {
             studentDao.deleteStu(studentNum);
             returnObject.put("success", true);
         } catch (Exception e) {
+            e.printStackTrace();
             returnObject.put("success", false);
+            returnObject.put("data", e.getCause());
         }
         return returnObject.toJSONString();
     }
