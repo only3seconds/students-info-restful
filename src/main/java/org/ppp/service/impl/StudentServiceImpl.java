@@ -46,8 +46,9 @@ public class StudentServiceImpl implements IStudentService {
         return returnObject.toJSONString();
     }
 
-    @DELETE
+    @GET
     @Path("/deleteStu/{studentNum}")
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Override
     public String deleteStu(@PathParam("studentNum") String studentNum) {
         JSONObject returnObject = new JSONObject();

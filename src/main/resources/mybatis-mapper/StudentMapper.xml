@@ -27,7 +27,7 @@
     <select id="findByStudentNum" parameterType="java.lang.String" resultMap="Student">
         SELECT <include refid="Base_Column_List" />
         FROM STUDENT AS t
-        WHERE t.student_num = #{studentNum}
+        WHERE t.student_num = #{studentNum} and deleted = 0;
     </select>
 
     <insert id="addStu" parameterType="org.ppp.model.Student" useGeneratedKeys="true" keyProperty="id">
@@ -37,7 +37,7 @@
     
     <update id="deleteStu" parameterType="java.lang.String">
         UPDATE STUDENT As t
-        SET t.selected = 1;
+        SET t.deleted = 1;
         WHERE t.student_num = #{studentNum}
     </update>
 
