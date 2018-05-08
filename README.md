@@ -381,11 +381,11 @@ public interface StudentDao {
 使用PostMan接口测试
 
 ### 1. 查询学生信息接口 - 测试
-![](/Users/thinking/Desktop/1.png)
+![](./doc/testPics/1.png)
 
 ### 2. 添加学生接口 - 测试
-![](/Users/thinking/Desktop/2.png)
-![](/Users/thinking/Desktop/3.png)
+![](./doc/testPics/2.png)
+![](./doc/testPics/3.png)
 
 ### 3. 删除学生接口 - 测试
-![](/Users/thinking/Desktop/4.png)
+![](./doc/testPics/4.png)
