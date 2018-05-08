@@ -1,6 +1,7 @@
 package org.ppp.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.ppp.dao.StudentDao;
 import org.ppp.model.Student;
 import org.ppp.service.IStudentService;
@@ -25,21 +26,37 @@ public class StudentServiceImpl implements IStudentService {
     @GET
     @Path(value = "/findStuByNum/{studentNum}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Override
     public String findByStudentNum(@PathParam("studentNum") String  studentNum) {
+        JSONObject returnObject = new JSONObject();
         Student student = studentDao.findByStudentNum(studentNum);
-        return JSON.toJSONString(student);
+        returnObject.put("data", JSON.toJSONString(student));
+        returnObject.put("success", true);
+        return returnObject.toJSONString();
     }
 
     @POST
     @Path("/addStu")
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public void addStu(Student student) {
+    @Override
+    public String addStu(Student student) {
+        JSONObject returnObject = new JSONObject();
         studentDao.addStu(student);
+        returnObject.put("success", true);
+        return returnObject.toJSONString();
     }
 
     @DELETE
     @Path("/deleteStu/{studentNum}")
-    public void deleteStu(@PathParam("studentNum") String studentNum) {
-        studentDao.deleteStu(studentNum);
+    @Override
+    public String deleteStu(@PathParam("studentNum") String studentNum) {
+        JSONObject returnObject = new JSONObject();
+        try {
+            studentDao.deleteStu(studentNum);
+            returnObject.put("success", true);
+        } catch (Exception e) {
+            returnObject.put("success", false);
+        }
+        return returnObject.toJSONString();
     }
 }

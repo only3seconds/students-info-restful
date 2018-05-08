@@ -24,7 +24,7 @@ public interface IStudentService {
     @POST
     @Path("/addStu")
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public void addStu(Student student);
+    public String addStu(Student student);
 
     /**
      * 删除一个学生信息
@@ -32,7 +32,7 @@ public interface IStudentService {
      */
     @DELETE
     @Path("/deleteStu/{studentNum}")
-    public void deleteStu(@PathParam("studentNum") String studentNum);
+    public String deleteStu(@PathParam("studentNum") String studentNum);
 
 }
 
