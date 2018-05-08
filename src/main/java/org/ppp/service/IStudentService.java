@@ -30,8 +30,9 @@ public interface IStudentService {
      * 删除一个学生信息
      * @param studentNum 学生学号
      */
-    @DELETE
+    @GET
     @Path("/deleteStu/{studentNum}")
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public String deleteStu(@PathParam("studentNum") String studentNum);
 
 }
