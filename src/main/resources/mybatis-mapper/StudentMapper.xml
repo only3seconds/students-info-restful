@@ -4,7 +4,7 @@
 <mapper namespace="org.ppp.dao.StudentDao">
     <resultMap id="Student" type="org.ppp.model.Student">
         <result column="id" property="id" />
-        <result column="student_num" property="studentId" />
+        <result column="student_num" property="studentNum" />
         <result column="student_name" property="studentName" />
         <result column="gender" property="gender" />
         <result column="age" property="age" />
@@ -29,4 +29,15 @@
         FROM STUDENT AS t
         WHERE t.student_num = #{studentNum}
     </select>
+
+    <insert id="addStu" parameterType="org.ppp.model.Student" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO STUDENT ('student_num', 'student_name', 'gender', 'age', 'address', 'major', 'deleted')
+        VALUES (#{studentNum}, #{studentName}, #{gender}, #{age}, #{address}, #{major}, #{deleted});
+    </insert>
+    
+    <delete id="deleteStu" parameterType="java.lang.String">
+        DELETE FROM STUDENT As t
+        WHERE t.student_num = #{studentNum}
+    </delete>
+
 </mapper>

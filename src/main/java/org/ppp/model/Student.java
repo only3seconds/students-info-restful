@@ -2,7 +2,7 @@ package org.ppp.model;
 
 public class Student {
     private int id;
-    private String studentId;
+    private String studentNum;
     private String studentName;
     private int gender;
     private int age;
@@ -18,12 +18,12 @@ public class Student {
         this.id = id;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public String getStudentNum() {
+        return studentNum;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setStudentNum(String studentNum) {
+        this.studentNum = studentNum;
     }
 
     public String getStudentName() {
@@ -78,7 +78,7 @@ public class Student {
     public String toString() {
         return "Student{" +
                 "id=" + id +
-                ", studentId='" + studentId + '\'' +
+                ", studentId='" + studentNum + '\'' +
                 ", studentName='" + studentName + '\'' +
                 ", gender=" + gender +
                 ", age=" + age +

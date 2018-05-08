@@ -25,9 +25,8 @@ public class StudentServiceImpl implements IStudentService {
     @GET
     @Path(value = "/findStuByNum/{studentNum}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String findStuByNum(@PathParam("studentNum") String  studentNum) {
+    public String findByStudentNum(@PathParam("studentNum") String  studentNum) {
         Student student = studentDao.findByStudentNum(studentNum);
-
         return JSON.toJSONString(student);
     }
 
@@ -35,14 +34,12 @@ public class StudentServiceImpl implements IStudentService {
     @Path("/addStu")
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public void addStu(Student student) {
-
+        studentDao.addStu(student);
     }
 
     @DELETE
-    @Path("/deleteStu/{studentId}")
-    public void deleteStu(@PathParam("studentId") String studentId) {
-
+    @Path("/deleteStu/{studentNum}")
+    public void deleteStu(@PathParam("studentNum") String studentNum) {
+        studentDao.deleteStu(studentNum);
     }
-
-
 }

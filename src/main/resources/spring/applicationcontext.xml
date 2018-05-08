@@ -2,16 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
-
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:cache="http://www.springframework.org/schema/cache"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-    http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
-
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
     <import resource="spring-cxf-restful.xml"/>
     <!-- 使用注解式注入 -->
@@ -19,14 +13,10 @@
     <!-- 自动扫描 -->
     <context:component-scan base-package="org.ppp" />
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
-    <!--调用restful服务端方式1-->
+
+    <!--调用restful服务端-->
     <bean id="webClient" class="org.apache.cxf.jaxrs.client.WebClient" factory-method="create">
-        <constructor-arg type="java.lang.String" value="http://localhost:8080/students-info-restful/cxf/" />
-    </bean>
-    <!--调用restful服务端方式2-->
-    <bean id="rESTSample" class="org.apache.cxf.jaxrs.client.JAXRSClientFactory" factory-method="create">
-        <constructor-arg type="java.lang.String" value="http://localhost:8080/students-info-restful/cxf/" />
-        <constructor-arg type="java.lang.Class" value="org.ppp.service.RESTSample" />
+        <constructor-arg type="java.lang.String" value="http://localhost:8080/students-info-restful/" />
     </bean>
 
     <!-- for properties -->
@@ -40,7 +30,6 @@
     </bean>
 
     <!-- for database -->
-
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">
         <property name="driverClass" value="${students.info.db.driverClass}" />
         <property name="jdbcUrl" value="${students.info.db.url}" />
@@ -64,11 +53,4 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <property name="basePackage" value="org.ppp.dao" />
     </bean>
-
-    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
-        <!--<property name="dataSource" ref="dataSource" />-->
-    <!--</bean>-->
-
-    <!--<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>-->
-
 </beans>
