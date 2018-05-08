@@ -32,7 +32,7 @@ public interface IStudentService {
      */
     @GET
     @Path("/deleteStu/{studentNum}")
-    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public String deleteStu(@PathParam("studentNum") String studentNum);
 
 }

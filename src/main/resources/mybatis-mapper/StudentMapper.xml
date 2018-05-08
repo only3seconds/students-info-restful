@@ -37,8 +37,8 @@
     
     <update id="deleteStu" parameterType="java.lang.String">
         UPDATE STUDENT As t
-        SET t.deleted = 1;
-        WHERE t.student_num = #{studentNum}
+        SET t.deleted = 1
+        WHERE t.student_num = #{studentNum};
     </update>
 
 </mapper>
