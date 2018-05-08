@@ -35,9 +35,10 @@
         VALUES (#{studentNum}, #{studentName}, #{gender}, #{age}, #{address}, #{major}, #{deleted});
     </insert>
     
-    <delete id="deleteStu" parameterType="java.lang.String">
-        DELETE FROM STUDENT As t
+    <update id="deleteStu" parameterType="java.lang.String">
+        UPDATE STUDENT As t
+        SET t.selected = 1;
         WHERE t.student_num = #{studentNum}
-    </delete>
+    </update>
 
 </mapper>
