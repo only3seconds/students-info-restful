@@ -1,22 +1,10 @@
 # Spring + Mybatis + CXF Restful服务
 
 ## 配置
-### 1. maven项目的 pom.xml配置
-
+### 1. maven项目的 pom.xml配置。
+主要添加一些package： c3p0 + spring + cxf + mysql-connector 等
+##### 代码:
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-
-  <groupId>only3seconds</groupId>
-  <artifactId>students-info-restful</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
-
-  <name>students-info-restful Maven Webapp</name>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -128,56 +116,16 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <finalName>students-info-restful</finalName>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.0.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.7.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.20.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
-</project>
-
 ```
 
 ### 2. Spring 基本配置 applicatoncontext.xml
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-       http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd">
+- 1.利用Spring自动扫描，创建Bean
+- 2.Spring提供了Properties机制，加入项目的配置文件:students-info-restful.properties
+- 3.配置c3p0数据库连接池，管理数据库连接。
+- 4.Spring配置MyBatis连接数据库
 
+##### 代码：
+```xml
     <import resource="spring-cxf-restful.xml"/>
     <!-- 使用注解式注入 -->
     <context:annotation-config />
@@ -228,6 +176,8 @@
 ```
 
 ### 3.Spring 整合 CXF spring-cxf-restful.xml
+
+##### 代码:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -262,6 +212,14 @@
 ```
 
 ## 设计
+ 使用分层设计模式: 
+ 
+ - 1.设计Model层，存放实体Bean对象
+ - 2.设计Service层。利用RESTFul接口
+ - 3.使用MyBatis机制，设计Dao接口层
+ - 4.数据库表设计时，保持不删除，使用字段deleted=1表示删除
+
+ 
 ### 1. model层实体类设计 Student.java
 ```java
 package org.ppp.model;
@@ -275,95 +233,16 @@ public class Student {
     private String address;
     private String major;
     private int deleted;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getStudentNum() {
-        return studentNum;
-    }
-
-    public void setStudentNum(String studentNum) {
-        this.studentNum = studentNum;
-    }
-
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    public int getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(int deleted) {
-        this.deleted = deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", studentId='" + studentNum + '\'' +
-                ", studentName='" + studentName + '\'' +
-                ", gender=" + gender +
-                ", age=" + age +
-                ", address='" + address + '\'' +
-                ", major='" + major + '\'' +
-                ", deleted=" + deleted +
-                '}';
-    }
+    
+    // getXXX(), setXXX()
 }
 ```
 
-### 2. 学生服务接口 IStudentService.java
+### 2.1 学生服务接口 IStudentService.java
+- 1.由于项目比较简单，直接省略了Controller层，设计Service层。
+- 2.使用接口，帮忙后期的RPC管理和调用
+
 ```java
-package org.ppp.service;
-
-import org.ppp.model.Student;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
 @Path(value = "/student")
 public interface IStudentService {
 
@@ -398,22 +277,9 @@ public interface IStudentService {
 
 ```
 
-### 3. 学生服务实现 StudentServiceImpl.java
+### 2.2 学生服务实现 StudentServiceImpl.java
+
 ```java
-package org.ppp.service.impl;
-
-import com.alibaba.fastjson.JSON;
-import org.ppp.dao.StudentDao;
-import org.ppp.model.Student;
-import org.ppp.service.IStudentService;
-
-import javax.annotation.Resource;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.UriInfo;
-
 public class StudentServiceImpl implements IStudentService {
     @Context
     private UriInfo uriInfo;
@@ -444,9 +310,78 @@ public class StudentServiceImpl implements IStudentService {
     public void deleteStu(@PathParam("studentNum") String studentNum) {
 
     }
+}
+```
 
+### 3. MyBatis中Dao层设计
+
+##### 代码:
+```java
+public interface StudentDao {
+    public Student findByStudentNum(@Param("studentNum")  String studentNum);
+
+    public void addStu(Student student);
+
+    public void deleteStu(@Param("studentNum")  String studentNum);
 
 }
 ```
 
+### 3.1 mybatis-mapper设计
 
+##### 代码:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ppp.dao.StudentDao">
+    <resultMap id="Student" type="org.ppp.model.Student">
+        <result column="id" property="id" />
+        <result column="student_num" property="studentNum" />
+        <result column="student_name" property="studentName" />
+        <result column="gender" property="gender" />
+        <result column="age" property="age" />
+        <result column="address" property="address" />
+        <result column="major" property="major" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        t.id,
+        t.student_num,
+        t.student_name,
+        t.gender,
+        t.age,
+        t.address,
+        t.major,
+        t.deleted
+    </sql>
+    
+    <select id="findByStudentNum" parameterType="java.lang.String" resultMap="Student">
+        SELECT <include refid="Base_Column_List" />
+        FROM STUDENT AS t
+        WHERE t.student_num = #{studentNum} and deleted = 0;
+    </select>
+
+    <insert id="addStu" parameterType="org.ppp.model.Student" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO STUDENT ('student_num', 'student_name', 'gender', 'age', 'address', 'major', 'deleted')
+        VALUES (#{studentNum}, #{studentName}, #{gender}, #{age}, #{address}, #{major}, #{deleted});
+    </insert>
+    
+    <update id="deleteStu" parameterType="java.lang.String">
+        UPDATE STUDENT As t
+        SET t.deleted = 1
+        WHERE t.student_num = #{studentNum};
+    </update>
+
+</mapper>
+```
+
+## 测试:
+使用PostMan接口测试
+
+### 1. 查询学生信息接口 - 测试
+
+### 2. 添加学生接口 - 测试
+
+### 3. 删除学生接口 - 测试
